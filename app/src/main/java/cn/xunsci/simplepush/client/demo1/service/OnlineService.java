@@ -32,7 +32,10 @@ public class OnlineService extends Service {
 	WakeLock wakeLock;
 	MyTcpClient myTcpClient;
 	Notification n;
-	
+
+	/*
+		继承TCPClientBase类，实现与simplePush服务通信交互
+	 */
 	public class MyTcpClient extends TCPClientBase {
 
 		public MyTcpClient(byte[] uuid, int appid, String serverAddr, int serverPort)
@@ -61,11 +64,11 @@ public class OnlineService extends Service {
 				return;
 			}
 			if(message.getCmd() == 16){// 0x10 通用推送信息
-				notifyUser(16,"DDPush通用推送信息","时间："+ DateTimeUtil.getCurDateTime(),"收到通用推送信息");
+				notifyUser(16,"simplePush测试推送信息","时间："+ DateTimeUtil.getCurDateTime(),"收到测试推送信息");
 			}
 			if(message.getCmd() == 17){// 0x11 分组推送信息
 				long msg = ByteBuffer.wrap(message.getData(), 5, 8).getLong();
-				notifyUser(17,"DDPush分组推送信息",""+msg,"收到通用推送信息");
+				notifyUser(17,"simplePush分组推送信息",""+msg,"收到分组推送信息");
 			}
 			if(message.getCmd() == 32){// 0x20 自定义推送信息
 				String str = null;
@@ -74,7 +77,7 @@ public class OnlineService extends Service {
 				}catch(Exception e){
 					str = Util.convert(message.getData(),5,message.getContentLength());
 				}
-				notifyUser(32,"DDPush自定义推送信息",""+str,"收到自定义推送信息");
+				notifyUser(32,"simplePush自定义推送信息",""+str,"收到自定义推送信息");
 			}
 			setPkgsInfo();
 		}
@@ -88,12 +91,22 @@ public class OnlineService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		this.setTickAlarm();
-		
+
+		//申请休眠锁，用于阻止系统休眠
 		PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+		/*PARTIAL_WAKE_LOCK :保持CPU 运转，屏幕和键盘灯是关闭的。
+		SCREEN_DIM_WAKE_LOCK ：保持CPU 运转，允许保持屏幕显示但有可能是灰的，关闭键盘灯
+		SCREEN_BRIGHT_WAKE_LOCK ：保持CPU 运转，保持屏幕高亮显示，关闭键盘灯
+		FULL_WAKE_LOCK ：保持CPU 运转，保持屏幕高亮显示，键盘灯也保持亮度
+		ACQUIRE_CAUSES_WAKEUP: 一旦有请求锁时，强制打开Screen和keyboard light
+		ON_AFTER_RELEASE: 在释放锁时reset activity timer
+		*/
+		//按下power键也可继续运行
 		wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "OnlineService");
 		
 		resetClient();
-		
+
+		//运行系统通知
 		notifyRunning();
 	}
 
@@ -128,7 +141,7 @@ public class OnlineService extends Service {
 
 		return START_STICKY;
 	}
-	
+	//设置收发包数量显示
 	protected void setPkgsInfo(){
 		if(this.myTcpClient == null){
 			return;
@@ -141,7 +154,8 @@ public class OnlineService extends Service {
 		editor.putString(Params.RECEIVE_PKGS, ""+received);
 		editor.commit();
 	}
-	
+
+	//重置simplePush终端
 	protected void resetClient(){
 		SharedPreferences account = this.getSharedPreferences(Params.DEFAULT_PRE_NAME,Context.MODE_PRIVATE);
 		String serverIp = account.getString(Params.SERVER_IP, "");
@@ -168,15 +182,16 @@ public class OnlineService extends Service {
 		}catch(Exception e){
 			Toast.makeText(this.getApplicationContext(), "操作失败："+e.getMessage(), Toast.LENGTH_LONG).show();
 		}
-		Toast.makeText(this.getApplicationContext(), "ddpush：终端重置", Toast.LENGTH_LONG).show();
+		Toast.makeText(this.getApplicationContext(), "simplepush：终端重置", Toast.LENGTH_LONG).show();
 	}
-	
+	//释放锁
 	protected void tryReleaseWakeLock(){
 		if(wakeLock != null && wakeLock.isHeld() == true){
 			wakeLock.release();
 		}
 	}
-	
+
+	//定时广播
 	protected void setTickAlarm(){
 		AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);  
 		Intent intent = new Intent(this,TickAlarmReceiver.class);
@@ -185,6 +200,7 @@ public class OnlineService extends Service {
 		requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);  
 		//小米2s的MIUI操作系统，目前最短广播间隔为5分钟，少于5分钟的alarm会等到5分钟再触发！2014-04-28
 		long triggerAtTime = System.currentTimeMillis();
+		//5min
 		int interval = 300 * 1000;  
 		alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtTime, interval, tickPendIntent);
 	}
@@ -233,6 +249,7 @@ public class OnlineService extends Service {
 		notificationManager.notify(0,notification);
 	}
 	*/
+	//通知栏通知设置
 	protected void notifyRunning(){
 		NotificationManager notificationManager=(NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
 		n = new Notification();
