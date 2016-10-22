@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ddpush-1.0.02">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/ddpush-1.0.02.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
