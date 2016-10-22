@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.ddpush.client.demo.tcp"
+    package="cn.xunsci.simplepush.client.demo1"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="7"
-        android:targetSdkVersion="16" />
+        android:minSdkVersion="15"
+        android:targetSdkVersion="24" />
     
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="org.ddpush.client.demo.tcp.cn.ddpush.client.demo.tcp.MainActivity"
+            android:name="cn.xunsci.simplepush.client.demo1.MainActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan|stateHidden" >
             <intent-filter>
@@ -32,14 +32,14 @@
             </intent-filter>
         </activity>
         <service
-            android:name="org.ddpush.client.demo.tcp.cn.ddpush.client.demo.tcp.service.OnlineService" ></service>
+            android:name="cn.xunsci.simplepush.client.demo1.service.OnlineService" ></service>
 
         <receiver
-            android:name="org.ddpush.client.demo.tcp.cn.ddpush.client.demo.tcp.receiver.TickAlarmReceiver" >
+            android:name="cn.xunsci.simplepush.client.demo1.receiver.TickAlarmReceiver" >
 		</receiver>
 		
         <receiver
-            android:name="org.ddpush.client.demo.tcp.cn.ddpush.client.demo.tcp.receiver.ConnectivityAlarmReceiver"
+            android:name="cn.xunsci.simplepush.client.demo1.receiver.ConnectivityAlarmReceiver"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -47,7 +47,7 @@
 		</receiver>
 		
         <receiver
-            android:name="org.ddpush.client.demo.tcp.cn.ddpush.client.demo.tcp.receiver.BootAlarmReceiver"
+            android:name="cn.xunsci.simplepush.client.demo1.receiver.BootAlarmReceiver"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
