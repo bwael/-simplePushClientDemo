@@ -13,7 +13,6 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.widget.Toast;
 
-//import org.ddpush.client.demo.tcp.R;
 import org.ddpush.im.v1.client.appuser.Message;
 import org.ddpush.im.v1.client.appuser.TCPClientBase;
 
@@ -194,28 +193,9 @@ public class OnlineService extends Service {
 		AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		alarmMgr.cancel(tickPendIntent);  
 	}
+
+
 	/*
-	protected void notifyRunning(){
-		NotificationManager notificationManager=(NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
-		n = new Notification();  
-		Intent intent = new Intent(this,MainActivity.class);
-		PendingIntent pi = PendingIntent.getActivity(this, 0,intent, PendingIntent.FLAG_ONE_SHOT);
-		n.contentIntent = pi;
-		n.setLatestEventInfo(this, "DDPushDemoTCP", "正在运行", pi);
-		//n.defaults = Notification.DEFAULT_ALL;
-		//n.flags |= Notification.FLAG_SHOW_LIGHTS;  
-		//n.flags |= Notification.FLAG_AUTO_CANCEL;
-		n.flags |= Notification.FLAG_ONGOING_EVENT;
-		n.flags |= Notification.FLAG_NO_CLEAR;
-		//n.iconLevel = 5;
-		           
-		n.icon = R.drawable.ic_launcher;  
-		n.when = System.currentTimeMillis();
-		n.tickerText = "DDPushDemoTCP正在运行";
-		notificationManager.notify(0, n);
-	}
-
-
 	protected void notifyRunning(){
 
 
@@ -224,7 +204,7 @@ public class OnlineService extends Service {
 		builder.setContentText("主内容区");
 		builder.setContentTitle("通知标题");
 		//builder.setSmallIcon(R.mipmap.icon_demo);
-		builder.setTicker("DDPushDemoTCP正在运行");
+		builder.setTicker("simplePushDemo正在运行");
 		builder.setAutoCancel(true);
 		builder.setWhen(System.currentTimeMillis());
 		Intent intent = new Intent(this, MainActivity.class);
@@ -234,6 +214,7 @@ public class OnlineService extends Service {
 		manager.notify(NOTIFICATION_ID, notification);
 	}
 	*/
+	/*
 	protected void notifyRunning(){
 		NotificationManager notificationManager=(NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -251,12 +232,32 @@ public class OnlineService extends Service {
 		startForeground(0,notification);
 		notificationManager.notify(0,notification);
 	}
-	
+	*/
+	protected void notifyRunning(){
+		NotificationManager notificationManager=(NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
+		n = new Notification();
+		Intent intent = new Intent(this,MainActivity.class);
+		PendingIntent pi = PendingIntent.getActivity(this, 0,intent, PendingIntent.FLAG_ONE_SHOT);
+		n.contentIntent = pi;
+		n.setLatestEventInfo(this, "simplePushDemo", "正在运行", pi);
+		//n.defaults = Notification.DEFAULT_ALL;
+		//n.flags |= Notification.FLAG_SHOW_LIGHTS;
+		//n.flags |= Notification.FLAG_AUTO_CANCEL;
+		n.flags |= Notification.FLAG_ONGOING_EVENT;
+		n.flags |= Notification.FLAG_NO_CLEAR;
+		//n.iconLevel = 5;
+
+		n.icon = R.drawable.ic_launcher;
+		n.when = System.currentTimeMillis();
+		n.tickerText = "simplePushDemo正在运行";
+		notificationManager.notify(0, n);
+	}
 	protected void cancelNotifyRunning(){
 		NotificationManager notificationManager=(NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.cancel(0);
 	}
-	
+
+	/*
 	public void notifyUser(int id, String title, String content, String tickerText){
 		NotificationManager notificationManager=(NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
 		Notification.Builder builder = new Notification.Builder(this);
@@ -276,7 +277,7 @@ public class OnlineService extends Service {
 		notificationManager.notify(id,notification);
 
 
-		/*
+
 		n.contentIntent = pi;
 
 		n.setLatestEventInfo(this, title, content, pi);
@@ -288,9 +289,26 @@ public class OnlineService extends Service {
 		n.when = System.currentTimeMillis();
 		n.tickerText = tickerText;
 		notificationManager.notify(id, n);
-		*/
-	}
 
+	}
+	*/
+	public void notifyUser(int id, String title, String content, String tickerText){
+		NotificationManager notificationManager=(NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
+		Notification n = new Notification();
+		Intent intent = new Intent(this,MainActivity.class);
+		PendingIntent pi = PendingIntent.getActivity(this, 0,intent, PendingIntent.FLAG_ONE_SHOT);
+		n.contentIntent = pi;
+
+		n.setLatestEventInfo(this, title, content, pi);
+		n.defaults = Notification.DEFAULT_ALL;
+		n.flags |= Notification.FLAG_SHOW_LIGHTS;
+		n.flags |= Notification.FLAG_AUTO_CANCEL;
+
+		n.icon = R.drawable.ic_launcher;
+		n.when = System.currentTimeMillis();
+		n.tickerText = tickerText;
+		notificationManager.notify(id, n);
+	}
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
