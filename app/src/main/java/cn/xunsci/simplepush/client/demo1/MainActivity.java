@@ -267,8 +267,10 @@ public class MainActivity extends Activity {
 		Thread t = new Thread(new send0x20Task(this,serverIp,port,uuid,msg));
 		t.start();
 	}
-	
+
+	//将当前配置存入共享存储
 	protected void saveAccountInfo(){
+
 		SharedPreferences account = this.getSharedPreferences(Params.DEFAULT_PRE_NAME,Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = account.edit();
 		editor.putString(Params.SERVER_IP, serverIp.getText().toString());
@@ -280,7 +282,8 @@ public class MainActivity extends Activity {
 		editor.commit();
 		
 	}
-	
+
+	//获取配置并填写
 	protected void freshCurrentInfo(){
 		SharedPreferences account = this.getSharedPreferences(Params.DEFAULT_PRE_NAME,Context.MODE_PRIVATE);
 		String serverIp = account.getString(Params.SERVER_IP, "");

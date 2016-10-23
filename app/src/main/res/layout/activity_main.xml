@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="org.ddpush.client.demo.tcp.cn.ddpush.client.demo.tcp.MainActivity"
+    tools:context="cn.xunsci.simplepush.client.demo1.MainActivity"
     tools:ignore="MergeRootFrame"
     android:scrollbars="vertical"    
     android:fadingEdge="vertical" >
@@ -27,7 +27,7 @@
 				    android:id="@+id/demo_server_ip"
 				    android:layout_width="fill_parent"
 				    android:layout_height="wrap_content"
-				    android:hint="192.168.100.100"
+				    android:hint="192.168.1.99"
 				    android:inputType="text" />
 
 	    </LinearLayout>
@@ -207,7 +207,7 @@
       	android:id="@+id/demo_send_0x10_button"
       	android:layout_width="fill_parent"
       	android:layout_height="wrap_content"
-      	android:text="发送通用推送信息"
+      	android:text="发送测试推送信息"
       	android:textColor="#333333"
       	android:textSize="20sp" />
 	    
