@@ -18,9 +18,6 @@ import org.ddpush.im.v1.client.appserver.Pusher;
 
 import cn.xunsci.simplepush.client.demo1.service.OnlineService;
 
-//import org.ddpush.client.demo.tcp.R;
-
-//import cn.xunsci.simplepush.client.demo1.;
 
 
 public class MainActivity extends Activity {
@@ -79,7 +76,7 @@ public class MainActivity extends Activity {
 		targetUserName = (EditText)findViewById(R.id.demo_target_user_name);
 		send0x11Data = (EditText)findViewById(R.id.demo_send_0x11_data);
 		send0x20Data = (EditText)findViewById(R.id.demo_send_0x20_data);
-		targetUserName = (EditText)findViewById(R.id.demo_target_user_name);
+		//targetUserName = (EditText)findViewById(R.id.demo_target_user_name);
 		send0x10Btn = (Button)findViewById(R.id.demo_send_0x10_button);
 		send0x10Btn.setOnClickListener(new View.OnClickListener() {
 		    public void onClick(View v) {
@@ -109,7 +106,8 @@ public class MainActivity extends Activity {
 	protected void start(){
 		if(serverIp.getText().toString().length() == 0){
 			Toast.makeText(this.getApplicationContext(), "请输入服务器ip", Toast.LENGTH_SHORT).show();
-    		serverIp.requestFocus();
+    		//获取输入焦点
+			serverIp.requestFocus();
     		return;
 		}
 		if(serverPort.getText().toString().length() == 0){
@@ -303,6 +301,7 @@ public class MainActivity extends Activity {
 			uuid="";
 		}
 		((TextView)findViewById(R.id.demo_cur_server_ip)).setText(serverIp);
+		//非UI线程中刷新界面
 		((TextView)findViewById(R.id.demo_cur_server_ip)).postInvalidate();
 		
 		((TextView)findViewById(R.id.demo_cur_server_port)).setText(serverPort);
@@ -382,7 +381,7 @@ public class MainActivity extends Activity {
 				pusher = new Pusher(serverIp,port, 1000*5);
 				result = pusher.push0x10Message(uuid);
 				if(result){
-					startSrv.putExtra("TEXT", "通用信息发送成功");
+					startSrv.putExtra("TEXT", "测试信息发送成功");
 				}else{
 					startSrv.putExtra("TEXT", "发送失败！格式有误");
 				}

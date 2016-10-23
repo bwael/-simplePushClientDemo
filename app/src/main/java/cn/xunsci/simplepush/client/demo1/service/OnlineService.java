@@ -110,6 +110,8 @@ public class OnlineService extends Service {
 		notifyRunning();
 	}
 
+
+	//拼了老命让你不休眠的逻辑
 	@Override
 	public int onStartCommand(Intent param, int flags, int startId) {
 		if(param == null){
@@ -121,6 +123,7 @@ public class OnlineService extends Service {
 		}
 		if(cmd.equals("TICK")){
 			if(wakeLock != null && wakeLock.isHeld() == false){
+				//获取锁
 				wakeLock.acquire();
 			}
 		}
@@ -198,7 +201,7 @@ public class OnlineService extends Service {
 		int requestCode = 0;  
 		tickPendIntent = PendingIntent.getBroadcast(this,  
 		requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);  
-		//小米2s的MIUI操作系统，目前最短广播间隔为5分钟，少于5分钟的alarm会等到5分钟再触发！2014-04-28
+		//小米的MIUI操作系统，最短广播间隔为5分钟，少于5分钟的alarm会等到5分钟再触发！2014-04-28
 		long triggerAtTime = System.currentTimeMillis();
 		//5min
 		int interval = 300 * 1000;  
