@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.ddpush.im.v1.client.appserver.Pusher;
+import cn.xunsci.simplepush.client.appserver.Pusher;
 
 import cn.xunsci.simplepush.client.demo1.service.OnlineService;
 

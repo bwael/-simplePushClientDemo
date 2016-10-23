@@ -13,15 +13,14 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.widget.Toast;
 
-import org.ddpush.im.v1.client.appuser.Message;
-import org.ddpush.im.v1.client.appuser.TCPClientBase;
-
 import java.nio.ByteBuffer;
 
-import cn.xunsci.simplepush.client.demo1.R;
+import cn.xunsci.simplepush.client.appuser.Message;
+import cn.xunsci.simplepush.client.appuser.TCPClientBase;
 import cn.xunsci.simplepush.client.demo1.DateTimeUtil;
 import cn.xunsci.simplepush.client.demo1.MainActivity;
 import cn.xunsci.simplepush.client.demo1.Params;
+import cn.xunsci.simplepush.client.demo1.R;
 import cn.xunsci.simplepush.client.demo1.Util;
 import cn.xunsci.simplepush.client.demo1.receiver.TickAlarmReceiver;
 
